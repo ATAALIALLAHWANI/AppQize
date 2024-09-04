@@ -14,6 +14,8 @@ import NetInfo from '@react-native-community/netinfo';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeTabs from './Navigation/HomeTap';
+import Statistics from './Screen/Statistics';
+import QuizList from './Screen/QuizList';
 
 
 export type rootStackPramList = {
@@ -23,6 +25,7 @@ export type rootStackPramList = {
   Interesting: undefined;
   Question: undefined;
   HomeTabs: undefined;
+  QuizList: undefined;
 };
 
 const Stack = createStackNavigator<rootStackPramList>();
@@ -49,14 +52,14 @@ const App = () => {
     <UserProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
 
           <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
           <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
           <Stack.Screen name="Interesting" component={Interesting} options={{ headerShown: false }} />
           <Stack.Screen name="Question" component={Question} options={{ headerShown: false }} />
-
+          <Stack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="QuizList" component={QuizList} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

@@ -11,34 +11,39 @@ function QuizList() {
     const quizData = [
         {
             name: 'Syntax Mastery',
-            icon: <FontAwesome5 name="code" size={24} color={colors.icon} />,
-            color: '#FFDEB4',
+            icon: <FontAwesome5 name="code" size={18} color={colors.icon} />,
+            color: '#F0C7A5', // Darkened from #FFDEB4
         },
         {
+
             name: 'Data Structures',
-            icon: <MaterialCommunityIcons name="database-outline" size={24} color={colors.icon} />,
-            color: '#FECACA',
+            icon: <MaterialCommunityIcons name="database-outline" size={18} color={colors.icon} />,
+            color: '#F0A6A0', // Darkened from #FECACA
         },
         {
             name: 'Algorithms Complexity',
-            icon: <AntDesign name="setting" size={24} color={colors.icon} />,
-            color: '#A5C8FF',
+            icon: <AntDesign name="setting" size={18} color={colors.icon} />,
+            color: '#8DA5E4', // Darkened from #A5C8FF
         },
         {
             name: 'Cloud Computing',
-            icon: <Feather name="cloud" size={24} color={colors.icon} />,
-            color: '#B4E4FF',
+            icon: <Feather name="cloud" size={18} color={colors.icon} />,
+            color: '#8AB9D5', // Darkened from #B4E4FF
         },
         {
             name: 'Problem Solving',
-            icon: <Ionicons name="bulb-outline" size={24} color={colors.icon} />,
-            color: '#C4F0C5',
+            icon: <Ionicons name="bulb-outline" size={18} color={colors.icon} />,
+            color: '#9BBF9E', // Darkened from #C4F0C5
         },
     ];
 
     const navigation = useNavigation();
 
     const handlePress = (category) => {
+
+
+
+
         console.log(category);
         navigation.navigate('Question', { category });
     };
@@ -65,7 +70,7 @@ function QuizList() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: colors.backgroundScreen,
         justifyContent: 'center',
         alignItems: 'center',
     },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Button, FlatList, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import { Config } from '../apiService';
 import styles2 from '../data/style2'; // Import your styles and colors
 import colors from '../data/colors';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../Context/UserContext';
 function Question() {
     const navigation = useNavigation();
     const route = useRoute();
@@ -16,6 +17,7 @@ function Question() {
     const [completed, setCompleted] = useState(false);
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [count, setCount] = useState(0);
+    const { id } = useContext(UserContext);
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
@@ -59,10 +61,6 @@ function Question() {
         setSelectedOption(null); // Reset selected option for next question
     };
 
-    const handleNextStep = () => {
-        console.log('Next Step');
-    };
-
     if (!data) {
         return <Text>Loading...</Text>;
     }
@@ -70,11 +68,41 @@ function Question() {
     const totalQuestions = data.length;
     const progress = totalQuestions > 0 ? (correctAnswers / totalQuestions) : 0;
 
+    const getCurrentDate = () => {
+        const date = new Date();
 
-    const handpress = () => {
 
-        navigation.navigate('Statistics');
-    }
+        const year = date.getFullYear().toString().slice(-2); // Get the last two digits of the year
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so add 1 and pad with leading zero
+        const day = date.getDate().toString().padStart(2, '0'); // Pad the day with a leading zero
+
+        return `${year}-${month}-${day}`;
+    };
+
+    const currentDate = getCurrentDate();
+
+    const handlePress = async () => {
+        console.log("id = ", id)
+        const currentDate = getCurrentDate(); // Ensure this function returns the date in the format you need
+        try {
+            const response = await axios.post(`${Config.API_URL1}statistice`, { // Corrected URL format
+                result: correctAnswers,
+                field: category, // Assuming 'category' is a valid field in your data
+                date: currentDate.toString(), // Convert date to string if needed
+                idUser: id
+            });
+
+            if (response.status === 200) {
+                console.log("Successfully posted statistics, navigating to Statistics screen");
+                navigation.navigate('Statistics'); // Navigate only if the response is successful
+            }
+
+        } catch (error) {
+            console.error("Error posting data:", error.message); // Descriptive error message
+        }
+    };
+
+
 
     return (
         <ScrollView contentContainerStyle={styles2.container}>
@@ -133,7 +161,7 @@ function Question() {
                             </View>
                         </View>
                         <View>
-                            <Button title='Show Statistics ' color={colors.primary} onPress={handpress} />
+                            <Button title='Show Statistics ' color={colors.primary} onPress={handlePress} />
                         </View>
 
                     </View>

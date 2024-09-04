@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View, TextInput, StyleSheet, Image, Button, Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Config } from '../apiService'; // Adjust the path as needed
@@ -7,11 +7,12 @@ import { useNavigation } from '@react-navigation/native';
 import styles2 from '../data/styles';
 import colors from '../data/colors';
 import CustomInput from '../compeonent/CustomInput';
+import { UserContext } from '../Context/UserContext';
 function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setLocalUsername] = useState('');
+    const [password, setLocalPassword] = useState('');
+    const { setUsername, setPassword } = useContext(UserContext); // Access the context's set functions
 
-    const [result, setResult] = useState(null);
     const navigation = useNavigation();
 
     const handleLogin = async () => {
@@ -22,8 +23,9 @@ function Login() {
                 });
 
                 // If the request is successful (status code 2xx)
-                setResult(response.data);
                 Alert.alert("Login Successful", `Welcome back, ${response.data.username}!`);
+                setUsername(username);
+                setPassword(password);
                 navigation.reset({
                     index: 1, // Focus on the second tab, which is 'Home'
                     routes: [{ name: 'HomeTabs', params: { screen: 'Home' } }],
@@ -33,14 +35,11 @@ function Login() {
 
 
                     if (error.response.status === 400) {
-                        setResult(null);
                         Alert.alert("Login Failed", "Unauthorized access. Please check your credentials.");
                     } else if (error.response.status === 401) {
-                        setResult(null);
                         Alert.alert("Login Failed", "The username is not correct.");
 
                     } else {
-                        setResult(null);
                         Alert.alert("Login Failed", "The login process encountered an issue.");
                     }
                 } else if (error.request) {
@@ -71,13 +70,13 @@ function Login() {
                     iconName="user"
                     placeholder="Username"
                     value={username}
-                    onChangeText={setUsername}
+                    onChangeText={setLocalUsername}
                 />
                 <CustomInput
                     iconName="lock"
                     placeholder="Password"
                     value={password}
-                    onChangeText={setPassword}
+                    onChangeText={setLocalPassword}
                     secureTextEntry={true}
                 />
 

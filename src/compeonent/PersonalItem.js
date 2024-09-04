@@ -10,6 +10,8 @@ const PersonalItem = ({ item }) => {
             <View style={styles.textContainer}>
                 <Text style={styles.title}>{item.name}</Text>
                 <Text style={styles.result}>Result: {item.result}</Text>
+                <Text style={styles.result}>date: {item.date}</Text>
+
 
             </View>
         </View>

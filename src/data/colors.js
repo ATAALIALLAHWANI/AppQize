@@ -3,7 +3,9 @@ export default {
     primary: '#790cc9', // Your logo color
     secondary: '#ff6347', // Secondary color (e.g., for accent)
 
-    background: '#ee1f8',
+    background: '#FFF',
+    backgroundScreen: '#ee1f8',
+
     text: '#ffffff',
     border: '#ccc',
     buttonBackground: '#1e90ff',
