@@ -7,6 +7,7 @@ import PersonalItem from '../compeonent/PersonalItem';
 import { Config } from '../apiService';
 import axios from 'axios';
 import { UserContext } from '../Context/UserContext';
+import _ from 'lodash';
 
 const chartConfig = {
     backgroundGradientFrom: "#1E2923",
@@ -14,63 +15,20 @@ const chartConfig = {
     backgroundGradientTo: "#08130D",
     backgroundGradientToOpacity: 0.5,
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
+    strokeWidth: 2,
     barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
+    useShadowColorFromDataset: false
 };
-const data = [
-    {
-        name: 'Syntax Mastery',
-        icon: <FontAwesome5 name="code" size={18} color={colors.icon} />,
-        color: '#F0C7A5', // Darkened from #FFDEB4
-        result: 10,
-        date: '24-8-8'
-
-    },
-    {
-        name: 'Data Structures',
-        icon: <MaterialCommunityIcons name="database-outline" size={18} color={colors.icon} />,
-        color: '#F0A6A0', // Darkened from #FECACA
-        result: 7,
-        date: '24-8-8'
-
-    },
-    {
-        name: 'Algorithms Complexity',
-        icon: <AntDesign name="setting" size={18} color={colors.icon} />,
-        color: '#8DA5E4', // Darkened from #A5C8FF
-        result: 15,
-        date: '24-8-8'
-    },
-    {
-        name: 'Cloud Computing',
-        icon: <Feather name="cloud" size={18} color={colors.icon} />,
-        color: '#8AB9D5', // Darkened from #B4E4FF
-        result: 20,
-        date: '24-8-8'
-
-    },
-    {
-        name: 'Problem Solving',
-        icon: <Ionicons name="bulb-outline" size={18} color={colors.icon} />,
-        color: '#9BBF9E', // Darkened from #C4F0C5
-        result: 18,
-        date: '24-8-8'
-
-    },
-];
 
 const Statistics = () => {
     const [data2, setData2] = useState(null);
-    useEffect(() => {
-        handleGet();
-    }, [])
-
     const { id } = useContext(UserContext);
 
+    useEffect(() => {
+        handleGet();
+    }, []);
+
     const handleGet = async () => {
-        console.log("id = ", id)
-        console.log('handle get')
         try {
             const response = await axios.get(`${Config.API_URL1}statistice`, {
                 params: { id }
@@ -80,31 +38,30 @@ const Statistics = () => {
                     let icon;
                     let color;
 
-                    // Set icon and color based on the field name
                     switch (item.field) {
                         case 'Syntax Mastery':
                             icon = <FontAwesome5 name="code" size={18} color={colors.icon} />;
-                            color = '#F0C7A5'; // Darkened from #FFDEB4
+                            color = '#F0C7A5';
                             break;
                         case 'Data Structures':
                             icon = <MaterialCommunityIcons name="database-outline" size={18} color={colors.icon} />;
-                            color = '#F0A6A0'; // Darkened from #FECACA
+                            color = '#F0A6A0';
                             break;
                         case 'Algorithms Complexity':
                             icon = <AntDesign name="setting" size={18} color={colors.icon} />;
-                            color = '#8DA5E4'; // Darkened from #A5C8FF
+                            color = '#8DA5E4';
                             break;
                         case 'Cloud Computing':
                             icon = <Feather name="cloud" size={18} color={colors.icon} />;
-                            color = '#8AB9D5'; // Darkened from #B4E4FF
+                            color = '#8AB9D5';
                             break;
                         case 'Problem Solving':
                             icon = <Ionicons name="bulb-outline" size={18} color={colors.icon} />;
-                            color = '#9BBF9E'; // Darkened from #C4F0C5
+                            color = '#9BBF9E';
                             break;
                         default:
-                            icon = <Ionicons name="question" size={18} color={colors.icon} />; // Default icon
-                            color = '#CCCCCC'; // Default color
+                            icon = <Ionicons name="question" size={18} color={colors.icon} />;
+                            color = '#CCCCCC';
                     }
 
                     return {
@@ -116,7 +73,7 @@ const Statistics = () => {
                     };
                 });
 
-                setData2(mappedData); // Set the mapped data to state
+                setData2(mappedData);
             }
 
         } catch (error) {
@@ -124,19 +81,34 @@ const Statistics = () => {
         }
     };
 
+    // Grouping and Summing the Data
+    const groupedData = _(data2)
+        .groupBy('name')
+        .map((items, name) => {
+            const icon = items[0].icon;
+            const color = items[0].color;
+            const totalResult = _.sumBy(items, 'result');
 
-    const pieData = data.map(item => ({
+            return {
+                name,
+                icon,
+                color,
+                result: totalResult,
+            };
+        })
+        .value();
+
+    // Generating pieData
+    const pieData = groupedData.map(item => ({
         name: item.name,
         population: item.result,
         color: item.color,
         legendFontColor: item.color,
         legendFontSize: 12,
-
-
     }));
+
     const handleEndReached = useCallback(() => {
-        console.log('backend')
-        handleGet(); // Call handleGet when the end of the list is reached
+        handleGet();
     }, []);
 
     return (
@@ -158,19 +130,17 @@ const Statistics = () => {
                 <Text style={styles.text}>Daily </Text>
                 <TouchableOpacity onPress={handleGet}>
                     <Ionicons name="today" size={24} color={colors.icon} />
-
                 </TouchableOpacity>
             </View>
 
             <FlatList
                 data={data2}
-                renderItem={({ item, index }) => <PersonalItem item={item} />}
+                renderItem={({ item }) => <PersonalItem item={item} />}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false}
                 style={styles.list}
                 contentContainerStyle={{ paddingBottom: 20 }}
                 onEndReached={handleEndReached}
-
             />
         </View>
     );
@@ -184,12 +154,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundScreen,
         paddingHorizontal: 20,
         paddingTop: 40,
-
     },
-    chartContainer: {
-        // backgroundColor: "#FFEDF8"
-
-    },
+    chartContainer: {},
     containerText: {
         width: '100%',
         justifyContent: 'space-between',
