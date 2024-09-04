@@ -129,7 +129,7 @@ const Interesting = () => {
                     <View style={styles2.questionContainer}>
                         <FontAwesome name="heart" size={50} color={colors.icon} />
                         <Text style={styles2.text}>Congratulations!</Text>
-                        <Text style={styles2.text}>You've completed this</Text>
+                        <Text style={styles2.text}>You've completed the quiz!</Text>
                         <View style={styles2.buttonContainer}>
                             <View style={styles2.button}>
                                 <Button title="Next Step" onPress={handleNextStep} color={colors.primary} />

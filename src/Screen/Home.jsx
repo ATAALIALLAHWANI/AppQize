@@ -125,11 +125,11 @@ const styles = StyleSheet.create({
     aspectRatio: 1, // Make the card a square
     padding: scale(10),
     borderRadius: scale(10),
-    backgroundColor: colors.backgroundScreen,
+    backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
     margin: scale(5),
-    shadowColor: '#000',
+    shadowColor: colors.shadowColor,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: scale(10),
