@@ -25,7 +25,7 @@ const Statistics = () => {
     const [data2, setData2] = useState(null);
     const { id } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
-
+    const [count, setCount] = useState(0);
     useEffect(() => {
         handleGet();
     }, []);

@@ -170,7 +170,7 @@ function Question() {
                             </View>
                         </View>
                         <View>
-                            <Button title='Show Statistics ' color={colors.primary} onPress={handlePress} />
+                            <Button title='Show Statistics ' color={colors.primary} onPress={handlePress} disabled={isLoading} />
                         </View>
                         <LoadingOverlay isVisible={isLoading} />
 
