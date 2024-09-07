@@ -46,8 +46,9 @@ const Welcome = () => {
                 }}
             >
                 <Animated.Text style={[styles.title, animatedStyles]} onPress={pressHandler}>
-                    Let's start the IT Quiz <AntDesign name="caretright" style={styles.icon} />
+                    Let's start the IT Quiz
                 </Animated.Text>
+                <AntDesign name="caretright" style={styles.icon} />
                 <Text style={styles.description}>
                     Test your knowledge on the latest IT trends and technologies. Answer questions on various topics and improve your skills.
                 </Text>
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     icon: {
         paddingHorizontal: scale(10),
         color: colors.icon,
-        fontSize: scale(30),
+        fontSize: scale(25),
     },
     description: {
         fontSize: scale(18),

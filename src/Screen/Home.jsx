@@ -1,9 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Dimensions, StyleSheet, View, FlatList, Text, Image, Button } from 'react-native';
 import colors from '../data/colors';
-import { ImageSlider } from '../data/SliderData'; // Assuming you have a data source for images
+import { ImageSlider } from '../data/SliderData';
 import SliderItem from '../components/SliderItem';
-const { width } = Dimensions.get('window');
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import axios from 'axios';
@@ -12,14 +11,16 @@ import { UserContext } from '../Context/UserContext';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 
-// Function to scale sizes based on screen size
-const scale = (size) => (width / 375) * size; // 375 is a base width (like iPhone 11)
+const { width } = Dimensions.get('window');
+
+const scale = (size) => (width / 375) * size;
 
 function Home() {
   const [dataProfile, setDataProfile] = useState(null);
   const { username, password } = useContext(UserContext);
   const { setId } = useContext(UserContext);
   const navigation = useNavigation();
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -27,7 +28,6 @@ function Home() {
           params: { username, password },
         });
         if (response.status === 200) {
-          console.log(response.data.id);
           setId(response.data.id);
           setDataProfile(response.data);
         }
@@ -38,29 +38,32 @@ function Home() {
 
     fetchProfile();
   }, [username, password]);
-  const handlNavigation = () => {
-    console.log("hi")
+
+  const handleNavigation = () => {
     navigation.navigate('QuizList');
-  }
+  };
+
   return (
     <View style={styles.container}>
-      <FlatList
-        data={ImageSlider} // The array of objects from SliderData
-        renderItem={({ item, index }) => (
-          <SliderItem item={item} index={index} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-        style={styles.slider}
-      />
+      <View style={styles.itemContainer}>
+        <FlatList
+          data={ImageSlider}
+          renderItem={({ item, index }) => (
+            <SliderItem item={item} index={index} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          style={styles.slider}
+        />
+      </View>
 
       <View style={styles.cardContainer}>
         <View style={styles.card}>
           <AntDesign name="barchart" size={40} color={colors.icon} />
-          <Text style={styles.cardValue}>grow up</Text>
-          <Text style={styles.cardTitle}> Embrace the journey of growth with open arms </Text>
+          <Text style={styles.cardValue}>Grow Up</Text>
+          <Text style={styles.cardTitle}>Embrace the journey of growth with open arms</Text>
         </View>
 
         <View style={styles.card}>
@@ -84,7 +87,7 @@ function Home() {
 
       <View style={styles.buttonContainer}>
         <View style={styles.button}>
-          <Button title='Start Quiz' color={colors.primary} onPress={handlNavigation} />
+          <Button title='Start Quiz' color={colors.primary} onPress={handleNavigation} />
         </View>
       </View>
     </View>
@@ -95,12 +98,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: colors.background, // Dynamic background color
+    backgroundColor: colors.background,
+  },
+  itemContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
   buttonContainer: {
     width: '100%',
     flex: 1,
-    marginHorizontal: scale(10),
     borderRadius: scale(5),
     justifyContent: 'center',
     alignItems: 'center',
@@ -111,18 +118,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   slider: {
-    marginBottom: scale(1),
+    marginBottom: scale(10),
   },
   cardContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: '90%',
-    flexWrap: 'wrap', // Allow cards to wrap to the next line if needed
+    flexWrap: 'wrap',
   },
   card: {
-    width: width * 0.42, // Set the width of the card as a percentage of the screen width
-    aspectRatio: 1, // Make the card a square
+    width: width * 0.42,
+    aspectRatio: 1,
     padding: scale(10),
     borderRadius: scale(10),
     backgroundColor: colors.background,
@@ -134,8 +141,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: scale(10),
     elevation: 2,
-    borderColor: colors.icon, // Set the border color from the colors object
-    borderWidth: 2, // Set the border width (adjust as needed)
+    borderColor: colors.icon,
+    borderWidth: 2,
   },
   cardTitle: {
     fontSize: scale(14),
@@ -149,8 +156,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   profileCard: {
-    width: width * 0.42, // Set the width of the profile card as a percentage of the screen width
-    aspectRatio: 1, // Make the card a square
+    width: width * 0.42,
+    aspectRatio: 1,
     padding: scale(10),
     borderRadius: scale(10),
     backgroundColor: '#f0f0f0',
