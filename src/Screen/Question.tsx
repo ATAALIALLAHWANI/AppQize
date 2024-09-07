@@ -7,7 +7,7 @@ import styles2 from '../data/style2'; // Import your styles and colors
 import colors from '../data/colors';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../Context/UserContext';
-import LoadingOverlay from '../compeonent/LoadingOverlay';
+import LoadingOverlay from '../components/LoadingOverlay';
 function Question() {
     const navigation = useNavigation();
     const route = useRoute();

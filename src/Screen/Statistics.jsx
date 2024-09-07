@@ -3,12 +3,12 @@ import { View, Dimensions, StyleSheet, Text, FlatList, TouchableOpacity } from '
 import { PieChart } from 'react-native-chart-kit';
 import colors from '../data/colors';
 import { FontAwesome5, MaterialCommunityIcons, AntDesign, Feather, Ionicons } from '@expo/vector-icons';
-import PersonalItem from '../compeonent/PersonalItem';
+import PersonalItem from '../components/PersonalItem';
 import { Config } from '../apiService';
 import axios from 'axios';
 import { UserContext } from '../Context/UserContext';
 import _ from 'lodash';
-import LoadingOverlay from '../compeonent/LoadingOverlay';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 const chartConfig = {
     backgroundGradientFrom: "#1E2923",

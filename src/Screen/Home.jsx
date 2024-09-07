@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { Dimensions, StyleSheet, View, FlatList, Text, Image, Button } from 'react-native';
 import colors from '../data/colors';
 import { ImageSlider } from '../data/SliderData'; // Assuming you have a data source for images
-import SliderItem from '../compeonent/SliderItem';
+import SliderItem from '../components/SliderItem';
 const { width } = Dimensions.get('window');
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';

@@ -1,45 +1,64 @@
 import React, { useState, useContext } from 'react';
-import { View, TextInput, StyleSheet, Image, Button, Alert } from 'react-native';
-import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import { View, TextInput, Image, Button, Alert } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import styles2 from '../data/styles';
 import colors from '../data/colors';
 import { UserContext } from '../Context/UserContext';
 import { Config } from '../apiService';
-import CustomInput from '../compeonent/CustomInput';
-import LoadingOverlay from '../compeonent/LoadingOverlay';
-function Register() {
-    const { setUsername, setEmail, setPassword } = useContext(UserContext); // Access the context's set functions
-    const [username, setLocalUsername] = useState(''); // Local state to hold input temporarily
-    const [email, setLocalEmail] = useState(''); // Local state to hold input temporarily
-    const [password, setLocalPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
+import CustomInput from '../components/CustomInput';
+import LoadingOverlay from '../components/LoadingOverlay';
 
+const Register = () => {
+    const { setUsername, setEmail, setPassword } = useContext(UserContext);
+    const [username, setLocalUsername] = useState('');
+    const [email, setLocalEmail] = useState('');
+    const [password, setLocalPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigation = useNavigation();
+
+    const validateInputs = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            Alert.alert("Invalid Email", "Please enter a valid email address.");
+            return false;
+        }
+
+        if (password.length < 6 || password.length > 8) {
+            Alert.alert("Invalid Password", "Password must be between 6 and 8 characters.");
+            return false;
+        }
+
+        const usernameRegex = /^[A-Z][A-Za-z0-9]{5,}$/;
+        if (!usernameRegex.test(username)) {
+            Alert.alert("Invalid Username", "Username should start with an uppercase letter and be at least 6 characters long.");
+            return false;
+        }
+
+        return true;
+    };
+
     const checkUsernameAvailability = async () => {
-        if (username && email && password) { // Ensure username, email, and password are provided
+        if (validateInputs()) {
             setIsLoading(true);
             try {
-                // Check if the username already exists
                 const response = await axios.get(`${Config.API_URL1}profile/exist`, {
-                    params: { username: username },
+                    params: { username },
                 });
 
-                if (response.data) { // If true, the username is available
-                    setUsername(username); // Save the username in context
-                    setEmail(email); // Save the email in context
-                    setPassword(password); // Save the password in context
+                if (response.data) {
+                    setUsername(username);
+                    setEmail(email);
+                    setPassword(password);
 
                     navigation.navigate('Interesting');
-                } else { // If false, the username already exists
+                } else {
                     Alert.alert("Username Taken", `The username ${username} is already in use.`);
                 }
             } catch (error) {
                 console.error("Error checking username:", error);
 
-                // Check if the error is related to the network or server
                 if (error.response) {
                     Alert.alert("Error", "Unable to check username availability. Please try again.");
                 } else if (error.request) {
@@ -50,9 +69,6 @@ function Register() {
             } finally {
                 setIsLoading(false);
             }
-        } else {
-            // Alert if username, email, or password is missing
-            Alert.alert("Input not correct", "Please enter a username, email, and password.");
         }
     };
 
@@ -90,8 +106,8 @@ function Register() {
                 </View>
             </View>
             <LoadingOverlay isVisible={isLoading} />
-
         </View>
     );
-}
+};
+
 export default Register;

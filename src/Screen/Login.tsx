@@ -6,9 +6,9 @@ import { Config } from '../apiService'; // Adjust the path as needed
 import { useNavigation } from '@react-navigation/native';
 import styles2 from '../data/styles';
 import colors from '../data/colors';
-import CustomInput from '../compeonent/CustomInput';
+import CustomInput from '../components/CustomInput';
 import { UserContext } from '../Context/UserContext';
-import LoadingOverlay from '../compeonent/LoadingOverlay';
+import LoadingOverlay from '../components/LoadingOverlay';
 function Login() {
     const [username, setLocalUsername] = useState('');
     const [password, setLocalPassword] = useState('');
@@ -25,9 +25,6 @@ function Login() {
                 const response = await axios.get(`${Config.API_URL1}profile`, {
                     params: { username, password },
                 });
-
-                // If the request is successful (status code 2xx)
-                Alert.alert("Login Successful", `Welcome back, ${response.data.username}!`);
                 setUsername(username);
                 setPassword(password);
                 navigation.reset({
