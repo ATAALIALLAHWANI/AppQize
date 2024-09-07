@@ -32,12 +32,8 @@ const Statistics = () => {
 
     const handleGet = async () => {
         setIsLoading(true);
-        console.log('user id =', id)
-        const id2 = parseInt(id);
         try {
-            const response = await axios.get(`${Config.API_URL1}statistice/by`, {
-                userId: { id2 }
-            });
+            const response = await axios.get(`${Config.API_URL1}statistice/by/${id}`);
             if (response.status === 200) {
                 console.log('done');
                 const mappedData = response.data.map(item => {
