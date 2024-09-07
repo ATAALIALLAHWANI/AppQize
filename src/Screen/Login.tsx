@@ -8,15 +8,19 @@ import styles2 from '../data/styles';
 import colors from '../data/colors';
 import CustomInput from '../compeonent/CustomInput';
 import { UserContext } from '../Context/UserContext';
+import LoadingOverlay from '../compeonent/LoadingOverlay';
 function Login() {
     const [username, setLocalUsername] = useState('');
     const [password, setLocalPassword] = useState('');
     const { setUsername, setPassword } = useContext(UserContext); // Access the context's set functions
+    const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
 
     const navigation = useNavigation();
 
     const handleLogin = async () => {
         if (username && password) {
+            setIsLoading(true); // Show loading spinner
+
             try {
                 const response = await axios.get(`${Config.API_URL1}profile`, {
                     params: { username, password },
@@ -49,6 +53,8 @@ function Login() {
                     console.error("Error", error.message);
                     Alert.alert("Error", "An error occurred. Please try again.");
                 }
+            } finally {
+                setIsLoading(false); // Hide loading spinner when request is done
             }
         } else {
             Alert.alert("Input not correct", "Please enter both a username and password.");
@@ -89,7 +95,10 @@ function Login() {
                         <Button title="Register" onPress={handleRegister} color={colors.primary} />
                     </View>
                 </View>
+                <LoadingOverlay isVisible={isLoading} />
+
             </View>
+
         </View>
     );
 }

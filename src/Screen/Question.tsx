@@ -7,6 +7,7 @@ import styles2 from '../data/style2'; // Import your styles and colors
 import colors from '../data/colors';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../Context/UserContext';
+import LoadingOverlay from '../compeonent/LoadingOverlay';
 function Question() {
     const navigation = useNavigation();
     const route = useRoute();
@@ -17,6 +18,8 @@ function Question() {
     const [completed, setCompleted] = useState(false);
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [count, setCount] = useState(0);
+    const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
+
     const { id } = useContext(UserContext);
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -84,6 +87,8 @@ function Question() {
     const handlePress = async () => {
         console.log("id = ", id)
         const currentDate = getCurrentDate(); // Ensure this function returns the date in the format you need
+        setIsLoading(true); // Show loading spinner
+
         try {
             const response = await axios.post(`${Config.API_URL1}statistice`, { // Corrected URL format
                 result: correctAnswers,
@@ -99,7 +104,11 @@ function Question() {
 
         } catch (error) {
             console.error("Error posting data:", error.message); // Descriptive error message
+        } finally {
+            setIsLoading(false);
         }
+
+
     };
 
 
@@ -163,6 +172,7 @@ function Question() {
                         <View>
                             <Button title='Show Statistics ' color={colors.primary} onPress={handlePress} />
                         </View>
+                        <LoadingOverlay isVisible={isLoading} />
 
                     </View>
 

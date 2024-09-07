@@ -8,6 +8,7 @@ import { Config } from '../apiService';
 import axios from 'axios';
 import { UserContext } from '../Context/UserContext';
 import _ from 'lodash';
+import LoadingOverlay from '../compeonent/LoadingOverlay';
 
 const chartConfig = {
     backgroundGradientFrom: "#1E2923",
@@ -23,17 +24,22 @@ const chartConfig = {
 const Statistics = () => {
     const [data2, setData2] = useState(null);
     const { id } = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
 
     useEffect(() => {
         handleGet();
     }, []);
 
     const handleGet = async () => {
+        setIsLoading(true);
+        console.log('user id =', id)
+        const id2 = parseInt(id);
         try {
-            const response = await axios.get(`${Config.API_URL1}statistice`, {
-                params: { id }
+            const response = await axios.get(`${Config.API_URL1}statistice/by`, {
+                userId: { id2 }
             });
             if (response.status === 200) {
+                console.log('done');
                 const mappedData = response.data.map(item => {
                     let icon;
                     let color;
@@ -78,6 +84,8 @@ const Statistics = () => {
 
         } catch (error) {
             console.log("Error getting statistics data:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -142,6 +150,8 @@ const Statistics = () => {
                 contentContainerStyle={{ paddingBottom: 20 }}
                 onEndReached={handleEndReached}
             />
+            <LoadingOverlay isVisible={isLoading} />
+
         </View>
     );
 };

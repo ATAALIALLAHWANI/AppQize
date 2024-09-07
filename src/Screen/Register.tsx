@@ -8,16 +8,19 @@ import colors from '../data/colors';
 import { UserContext } from '../Context/UserContext';
 import { Config } from '../apiService';
 import CustomInput from '../compeonent/CustomInput';
+import LoadingOverlay from '../compeonent/LoadingOverlay';
 function Register() {
     const { setUsername, setEmail, setPassword } = useContext(UserContext); // Access the context's set functions
     const [username, setLocalUsername] = useState(''); // Local state to hold input temporarily
     const [email, setLocalEmail] = useState(''); // Local state to hold input temporarily
     const [password, setLocalPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
 
 
     const navigation = useNavigation();
     const checkUsernameAvailability = async () => {
         if (username && email && password) { // Ensure username, email, and password are provided
+            setIsLoading(true);
             try {
                 // Check if the username already exists
                 const response = await axios.get(`${Config.API_URL1}profile/exist`, {
@@ -44,6 +47,8 @@ function Register() {
                 } else {
                     Alert.alert("Error", "An error occurred. Please try again.");
                 }
+            } finally {
+                setIsLoading(false);
             }
         } else {
             // Alert if username, email, or password is missing
@@ -84,6 +89,8 @@ function Register() {
                     </View>
                 </View>
             </View>
+            <LoadingOverlay isVisible={isLoading} />
+
         </View>
     );
 }

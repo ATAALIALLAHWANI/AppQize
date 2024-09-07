@@ -41,9 +41,6 @@ function QuizList() {
 
     const handlePress = (category) => {
 
-
-
-
         console.log(category);
         navigation.navigate('Question', { category });
     };
