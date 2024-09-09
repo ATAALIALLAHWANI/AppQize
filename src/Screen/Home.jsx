@@ -10,6 +10,7 @@ import { Config } from '../apiService';
 import { UserContext } from '../Context/UserContext';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import { getToken } from '../type/storeToken';
 
 const { width } = Dimensions.get('window');
 
@@ -24,9 +25,11 @@ function Home() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`${Config.API_URL1}profile`, {
-          params: { username, password },
+        const token = await getToken();  // Retrieve token from AsyncStorage
+        const response = await axios.get(`${Config.API_URL1}profile/GetByID`, {
+          params: { idUser: token },
         });
+
         if (response.status === 200) {
           setId(response.data.id);
           setDataProfile(response.data);
@@ -72,7 +75,6 @@ function Home() {
         </View>
 
         <View style={styles.profileCard}>
-          <Image source={{ uri: 'https://example.com/profile.jpg' }} style={styles.profileImage} />
           {dataProfile ? (
             <>
               <MaterialIcons name="lock-person" size={40} color={colors.icon} />

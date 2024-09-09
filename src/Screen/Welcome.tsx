@@ -11,6 +11,10 @@ import Animated, {
     withRepeat,
 } from 'react-native-reanimated';
 
+import { getToken } from '../type/storeToken';
+import axios from 'axios';
+import { Config } from '../apiService';
+
 const { width } = Dimensions.get('window');
 const scale = (size) => (width / 375) * size; // Scale function based on screen width
 
@@ -31,8 +35,29 @@ const Welcome = () => {
         transform: [{ translateX: offset.value }],
     }));
 
-    const pressHandler = () => {
-        navigation.navigate('Login');
+    const pressHandler = async () => {
+        try {
+            let token = await getToken();  // Retrieve token from AsyncStorage
+            if (token !== null) {
+                const response = await axios.get(`${Config.API_URL1}profile/GetByID`, {
+                    params: { idUser: token },
+                });
+
+                if (response.status === 200) {
+                    console.log("Token retrieved and valid:", token);
+                    navigation.navigate('HomeTabs');  // Navigate to HomeTabs on successful token
+                } else {
+                    console.log("Invalid token, navigating to login.");
+                    navigation.navigate('Login');  // Navigate to Login if token is invalid
+                }
+            } else {
+                console.log("No token found, navigating to login.");
+                navigation.navigate('Login');  // Navigate to Login if no token is found
+            }
+        } catch (error) {
+            console.error("Error during token validation or API request:", error);
+            navigation.navigate('Login');  // Navigate to Login on error
+        }
     };
 
     return (

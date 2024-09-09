@@ -9,14 +9,18 @@ import colors from '../data/colors';
 import CustomInput from '../components/CustomInput';
 import { UserContext } from '../Context/UserContext';
 import LoadingOverlay from '../components/LoadingOverlay';
+import { storeToken } from '../type/storeToken';
 function Login() {
     const [username, setLocalUsername] = useState('');
     const [password, setLocalPassword] = useState('');
     const { setUsername, setPassword } = useContext(UserContext); // Access the context's set functions
     const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
-
     const navigation = useNavigation();
-
+    const saveToken = async (id) => {
+        const id2 = String(id);
+        const token = id2;
+        await storeToken(token);
+    };
     const handleLogin = async () => {
         if (username && password) {
             setIsLoading(true); // Show loading spinner
@@ -27,6 +31,9 @@ function Login() {
                 });
                 setUsername(username);
                 setPassword(password);
+
+
+                saveToken(response.data.id);
                 navigation.reset({
                     index: 1, // Focus on the second tab, which is 'Home'
                     routes: [{ name: 'HomeTabs', params: { screen: 'Home' } }],
