@@ -14,6 +14,7 @@ import Animated, {
 import { getToken } from '../type/storeToken';
 import axios from 'axios';
 import { Config } from '../apiService';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 const { width } = Dimensions.get('window');
 const scale = (size) => (width / 375) * size; // Scale function based on screen width
@@ -22,6 +23,7 @@ const Welcome = () => {
     const navigation = useNavigation();
     const offset = useSharedValue(0);
     const [containerWidth, setContainerWidth] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         offset.value = withRepeat(
@@ -37,6 +39,8 @@ const Welcome = () => {
 
     const pressHandler = async () => {
         try {
+            setIsLoading(true);
+
             let token = await getToken();  // Retrieve token from AsyncStorage
             if (token !== null) {
                 const response = await axios.get(`${Config.API_URL1}profile/GetByID`, {
@@ -45,7 +49,7 @@ const Welcome = () => {
 
                 if (response.status === 200) {
                     console.log("Token retrieved and valid:", token);
-                    navigation.navigate('HomeTabs');  // Navigate to HomeTabs on successful token
+                    navigation.navigate('main');  // Navigate to HomeTabs on successful token
                 } else {
                     console.log("Invalid token, navigating to login.");
                     navigation.navigate('Login');  // Navigate to Login if token is invalid
@@ -57,6 +61,8 @@ const Welcome = () => {
         } catch (error) {
             console.error("Error during token validation or API request:", error);
             navigation.navigate('Login');  // Navigate to Login on error
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -71,9 +77,9 @@ const Welcome = () => {
                 }}
             >
                 <Animated.Text style={[styles.title, animatedStyles]} onPress={pressHandler}>
-                    Let's start the IT Quiz
+                    Let's start the IT Quiz                <AntDesign name="caretright" style={styles.icon} />
+
                 </Animated.Text>
-                <AntDesign name="caretright" style={styles.icon} />
                 <Text style={styles.description}>
                     Test your knowledge on the latest IT trends and technologies. Answer questions on various topics and improve your skills.
                 </Text>
@@ -84,6 +90,8 @@ const Welcome = () => {
                     <MaterialIcons name="security" style={styles.icon} />
                 </View>
             </View>
+            <LoadingOverlay isVisible={isLoading} />
+
         </View>
     );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Dimensions, StyleSheet, View, FlatList, Text, Image, Button } from 'react-native';
+import { Dimensions, StyleSheet, View, FlatList, Text, Image, Button, TouchableOpacity } from 'react-native';
 import colors from '../data/colors';
 import { ImageSlider } from '../data/SliderData';
 import SliderItem from '../components/SliderItem';
@@ -11,6 +11,7 @@ import { UserContext } from '../Context/UserContext';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { getToken } from '../type/storeToken';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 const { width } = Dimensions.get('window');
 
@@ -48,6 +49,11 @@ function Home() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.list}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <EvilIcons name="navicon" size={35} color={colors.icon} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.itemContainer}>
         <FlatList
           data={ImageSlider}
@@ -101,6 +107,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: colors.background,
+  },
+  list: {
+    padding: '3%',
+    justifyContent: 'flex-start',
+    alignSelf: 'flex-end'
   },
   itemContainer: {
     justifyContent: 'center',

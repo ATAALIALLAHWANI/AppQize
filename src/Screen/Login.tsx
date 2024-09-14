@@ -36,7 +36,7 @@ function Login() {
                 saveToken(response.data.id);
                 navigation.reset({
                     index: 1, // Focus on the second tab, which is 'Home'
-                    routes: [{ name: 'HomeTabs', params: { screen: 'Home' } }],
+                    routes: [{ name: 'main', params: { screen: 'Home2' } }],
                 });
             } catch (error) {
                 if (error.response) {

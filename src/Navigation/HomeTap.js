@@ -12,6 +12,7 @@ const HomeTabs = () => {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
+                initialRoute: Home,
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 

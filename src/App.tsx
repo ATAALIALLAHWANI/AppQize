@@ -16,6 +16,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeTabs from './Navigation/HomeTap';
 import Statistics from './Screen/Statistics';
 import QuizList from './Screen/QuizList';
+import DrawerNavigator from './Navigation/DrawerNavigator';
 
 
 export type rootStackPramList = {
@@ -26,6 +27,7 @@ export type rootStackPramList = {
   Question: undefined;
   HomeTabs: undefined;
   QuizList: undefined;
+  main: undefined;
 };
 
 const Stack = createStackNavigator<rootStackPramList>();
@@ -58,8 +60,7 @@ const App = () => {
           <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
           <Stack.Screen name="Interesting" component={Interesting} options={{ headerShown: false }} />
           <Stack.Screen name="Question" component={Question} options={{ headerShown: false }} />
-          <Stack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
-          <Stack.Screen name="QuizList" component={QuizList} options={{ headerShown: false }} />
+          <Stack.Screen name="main" component={DrawerNavigator} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
