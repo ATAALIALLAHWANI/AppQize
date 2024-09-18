@@ -94,9 +94,11 @@ function Home() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <Button title='Start Quiz' color={colors.primary} onPress={handleNavigation} />
-        </View>
+        <TouchableOpacity onPress={handleNavigation}>
+          <Text> Start Quize </Text>
+        </TouchableOpacity>
+
+
       </View>
     </View>
   );
@@ -107,6 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: colors.background,
+    justifyContent: 'center',
   },
   list: {
     padding: '3%',
@@ -119,10 +122,17 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonContainer: {
-    width: '100%',
-    flex: 1,
-    borderRadius: scale(5),
+    width: '50%',
+    backgroundColor: colors.primary,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 8,
     justifyContent: 'center',
+    shadowColor: colors.shadowColor,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
     alignItems: 'center',
   },
   button: {

@@ -5,6 +5,7 @@ import colors from '../data/colors'; // Assuming you have this file for your col
 import QuizList from '../Screen/QuizList';
 import Home from '../Screen/Home';
 import Statistics from '../Screen/Statistics';
+import International from '../Screen/International';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +23,8 @@ const HomeTabs = () => {
                         iconName = 'home';
                     } else if (route.name === 'Statistics') {
                         iconName = 'bar-chart';
+                    } else if (route.name === 'International') {
+                        iconName = 'language';
                     }
 
                     return (
@@ -49,6 +52,7 @@ const HomeTabs = () => {
                 },
             })}
         >
+            <Tab.Screen name='International' component={International} options={{ headerShown: false }} />
             <Tab.Screen name="QuizList" component={QuizList} options={{ headerShown: false }} />
             <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Tab.Screen name="Statistics" component={Statistics} options={{ headerShown: false }} />

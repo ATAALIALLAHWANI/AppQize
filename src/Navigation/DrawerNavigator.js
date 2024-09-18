@@ -129,7 +129,7 @@ const DrawerNavigator = () => {
             }}
         >
             <Drawer.Screen
-                name="International"
+                name="international"
                 component={HomeTabs}
                 options={{
                     drawerIcon: ({ color, size }) => (
