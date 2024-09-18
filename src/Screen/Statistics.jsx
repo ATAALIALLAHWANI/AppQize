@@ -6,9 +6,9 @@ import { FontAwesome5, MaterialCommunityIcons, AntDesign, Feather, Ionicons } fr
 import PersonalItem from '../components/PersonalItem';
 import { Config } from '../apiService';
 import axios from 'axios';
-import { UserContext } from '../Context/UserContext';
 import _ from 'lodash';
 import LoadingOverlay from '../components/LoadingOverlay';
+import { getToken } from '../type/storeToken';
 
 const chartConfig = {
     backgroundGradientFrom: "#1E2923",
@@ -23,17 +23,18 @@ const chartConfig = {
 
 const Statistics = () => {
     const [data2, setData2] = useState(null);
-    const { id } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
-    const [count, setCount] = useState(0);
     useEffect(() => {
         handleGet();
     }, []);
 
     const handleGet = async () => {
+        const id = await getToken();
+        console.log(typeof (id));
         setIsLoading(true);
         try {
             const response = await axios.get(`${Config.API_URL1}statistice/by/${id}`);
+            console.log(response.data)
             if (response.status === 200) {
                 console.log('done');
                 const mappedData = response.data.map(item => {

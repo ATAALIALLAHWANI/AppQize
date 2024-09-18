@@ -49,7 +49,7 @@ const SliderFriends = ({ friends, isSearching }) => {
                             </View>
 
                             {/* Conditionally render the button based on friendship status */}
-                            {addedFriends.has(item.id) || item.friendshipStatus === "PENDING" ? (
+                            {addedFriends.has(item.id) || item.friendshipStatus === "PENDING" || item.friendshipStatus === "ACCEPTED" ? (
                                 <TouchableOpacity
                                     style={styles.disabledButton}
                                     disabled

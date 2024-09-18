@@ -6,8 +6,8 @@ import { Config } from '../apiService';
 import styles2 from '../data/style2'; // Import your styles and colors
 import colors from '../data/colors';
 import { useNavigation } from '@react-navigation/native';
-import { UserContext } from '../Context/UserContext';
 import LoadingOverlay from '../components/LoadingOverlay';
+import { getToken } from '../type/storeToken';
 function Question() {
     const navigation = useNavigation();
     const route = useRoute();
@@ -20,7 +20,6 @@ function Question() {
     const [count, setCount] = useState(0);
     const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
 
-    const { id } = useContext(UserContext);
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
@@ -85,7 +84,7 @@ function Question() {
     const currentDate = getCurrentDate();
 
     const handlePress = async () => {
-        console.log("id = ", id)
+        let id = await getToken();
         const currentDate = getCurrentDate(); // Ensure this function returns the date in the format you need
         setIsLoading(true); // Show loading spinner
 
