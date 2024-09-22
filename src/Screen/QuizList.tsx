@@ -3,39 +3,12 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-nati
 import { FontAwesome5, MaterialCommunityIcons, AntDesign, Feather, Ionicons } from '@expo/vector-icons';
 import colors from '../data/colors'; // Assuming you have a colors file for your theme
 import { useNavigation } from '@react-navigation/native';
+import quizData from '../data/QuzeData';
 
 const { width } = Dimensions.get('window');
 const scale = (size) => (width / 375) * size;
 
 function QuizList() {
-    const quizData = [
-        {
-            name: 'Syntax Mastery',
-            icon: <FontAwesome5 name="code" size={18} color={colors.icon} />,
-            color: '#F0C7A5', // Darkened from #FFDEB4
-        },
-        {
-
-            name: 'Data Structures',
-            icon: <MaterialCommunityIcons name="database-outline" size={18} color={colors.icon} />,
-            color: '#F0A6A0', // Darkened from #FECACA
-        },
-        {
-            name: 'Algorithms Complexity',
-            icon: <AntDesign name="setting" size={18} color={colors.icon} />,
-            color: '#8DA5E4', // Darkened from #A5C8FF
-        },
-        {
-            name: 'Cloud Computing',
-            icon: <Feather name="cloud" size={18} color={colors.icon} />,
-            color: '#8AB9D5', // Darkened from #B4E4FF
-        },
-        {
-            name: 'Problem Solving',
-            icon: <Ionicons name="bulb-outline" size={18} color={colors.icon} />,
-            color: '#9BBF9E', // Darkened from #C4F0C5
-        },
-    ];
 
     const navigation = useNavigation();
 

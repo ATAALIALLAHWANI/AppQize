@@ -6,12 +6,14 @@ import colors from '../data/colors';
 import SliderFriends from '../components/SliderFriends';
 import { Config } from '../apiService';
 import { getToken } from '../type/storeToken';
+import { useNavigation } from '@react-navigation/native';
 const International = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [friends, setFriends] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
 
     const searchInputRef = useRef(null);
+    const navigation = useNavigation();
 
     const handleSearch = async (name) => {
         setIsSearching(true);
@@ -42,6 +44,9 @@ const International = () => {
             searchInputRef.current.focus();
         }
     };
+    const handlChallenge = () => {
+        navigation.navigate('Challenge');
+    }
 
     return (
         <View style={styles.container}>
@@ -54,7 +59,7 @@ const International = () => {
                     onChangeText={(name) => handleSearch(name)}
                 />
 
-                <TouchableOpacity style={styles.buttonChallenge}>
+                <TouchableOpacity style={styles.buttonChallenge} onPress={handlChallenge}>
                     <View style={styles.buttonContent}>
                         <Text style={styles.buttonText}>Make Challenges</Text>
                         <EvilIcons name="trophy" size={20} color="#FFF" />

@@ -1,38 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, StyleSheet, View } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import { Config } from '../apiService';
-import styles2 from '../data/style2'; // Import your styles and colors
-import colors from '../data/colors';
-import { useNavigation } from '@react-navigation/native';
 import LoadingOverlay from '../components/LoadingOverlay';
 import { getToken } from '../type/storeToken';
 import QuestionComponent from '../components/QuestionComponent';
+import { UserContext } from '../Context/UserContext';
 
-function Question() {
+const QuestionChallenge = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { category } = route.params; // Access the passed category
-    const [data, setData] = useState(null); // Initialize data state
+    const category = route.params?.category; // Access the passed category
+    const [data, setData] = useState([]); // Initialize data state as an empty array
     const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [completed, setCompleted] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
 
+    const { challengeId } = useContext(UserContext);
+
     // Fetch questions from API
     useEffect(() => {
         const fetchQuestions = async () => {
             setIsLoading(true);
             try {
+                console.log("Category  ", category);
                 const response = await axios.get(`${Config.API_URL1}question/category/${category}`);
-                if (response.status === 200) {
-                    const shuffledQuestions = shuffleArray(response.data).slice(0, 10);
+                if (response.status === 200 && response.data.length > 0) {
+                    const shuffledQuestions = shuffleArray(response.data).slice(0, 10); // Shuffle and slice the questions
                     setData(shuffledQuestions);
+                } else {
+                    setData([]); // If no data or empty response, set data to empty array
                 }
             } catch (error) {
                 console.error('Error fetching questions:', error);
+                setData([]); // Set data to empty array on error
             } finally {
                 setIsLoading(false);
             }
@@ -40,7 +44,6 @@ function Question() {
 
         fetchQuestions();
     }, [category]);
-
 
     // Shuffle questions
     const shuffleArray = (array) => {
@@ -54,21 +57,16 @@ function Question() {
 
     // Handle answer selection
     const handleAnswer = () => {
-        if (data[currentQuestion].rightAnswer === selectedOption) {
+        if (data[currentQuestion] && data[currentQuestion].rightAnswer === selectedOption) {
             setCorrectAnswers(prev => prev + 1);
         }
-        setSelectedOption(null); // Reset selected option for next question
+        setSelectedOption(null); // Reset selected option for the next question
         if (currentQuestion === data.length - 1) {
             setCompleted(true); // Complete the quiz if it's the last question
         } else {
             setCurrentQuestion(prev => prev + 1);
         }
     };
-
-    // Check if data is available
-    if (!data) {
-        return <Text>Loading...</Text>;
-    }
 
     // Get current date for statistics
     const getCurrentDate = () => {
@@ -80,28 +78,40 @@ function Question() {
     };
 
     const handlePress = async () => {
-        let id = await getToken();
-        const currentDate = getCurrentDate();
-        setIsLoading(true); // Show loading spinner
+        let participan = await getToken();
+        const participantId = parseInt(participan); // Convert participantId to an integer
+        const score = parseInt(correctAnswers);  // Convert score to an integer
+        const status = "ACCEPTED"; // Set the status to ACCEPTED
+        setIsLoading(true); // Show loading indicator
+        console.log(participantId);
 
         try {
-            const response = await axios.post(`${Config.API_URL1}statistice`, {
-                result: correctAnswers,
-                field: category,
-                date: currentDate,
-                idUser: id
+            const response = await axios.post(`${Config.API_URL1}challenges/${challengeId}/result`, {
+                participantId: participantId,  // These are part of the body, not params
+                score: score,
+                status: status
             });
 
             if (response.status === 200) {
-                console.log("Successfully posted statistics, navigating to Statistics screen");
-                navigation.navigate('Statistics'); // Navigate only if the response is successful
+                navigation.navigate('Statistics'); // Navigate to Statistics if the request is successful
             }
         } catch (error) {
             console.error("Error posting data:", error.message);
         } finally {
-            setIsLoading(false);
+            setIsLoading(false); // Hide loading indicator
         }
     };
+
+
+    // Check if data is loading
+    if (isLoading) {
+        return <LoadingOverlay isVisible={true} />;
+    }
+
+    // If no questions are available
+    if (!data || data.length === 0) {
+        return <Text>No questions available for this category.</Text>;
+    }
 
     return (
         <QuestionComponent
@@ -119,7 +129,4 @@ function Question() {
     );
 }
 
-// Styles can be defined here if needed
-const styles = StyleSheet.create({});
-
-export default Question;
+export default QuestionChallenge;

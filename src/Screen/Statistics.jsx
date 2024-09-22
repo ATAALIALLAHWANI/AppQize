@@ -30,11 +30,11 @@ const Statistics = () => {
 
     const handleGet = async () => {
         const id = await getToken();
-        console.log(typeof (id));
+        // console.log(typeof (id));
         setIsLoading(true);
         try {
             const response = await axios.get(`${Config.API_URL1}statistice/by/${id}`);
-            console.log(response.data)
+            // console.log(response.data)
             if (response.status === 200) {
                 console.log('done');
                 const mappedData = response.data.map(item => {

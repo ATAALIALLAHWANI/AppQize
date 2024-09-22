@@ -17,40 +17,49 @@ const RenderNotification = ({ type, message, timestamp, receiveId, visit }) => {
 
     // Set icon and color based on notification type
     if (isAccepted || visit === 'yes') {
-        icon = 'account-check';
-        color = colors.success;
+        if (type === 'INVITATION' || type === 'Creator') {
+            icon = 'trophy';
+            color = colors.success;
+        } else {
+            icon = 'account-check';
+            color = colors.success;
+        }
+
     } else if (type === 'friend_request') {
         icon = 'account-plus';
         color = colors.primary;
-    } else if (type === 'challenge_acceptance') {
+    } else if (type === 'INVITATION' || type === 'Creator') {
         icon = 'trophy';
         color = colors.success;
     }
 
     // Function to handle accepting friend requests
     const handleAddFriends = async () => {
-        setLoading(true);  // Set loading state
-        setError(null);    // Clear previous error messages
+        if (visit === 'no') {
+            setLoading(true);  // Set loading state
+            setError(null);    // Clear previous error messages
 
-        try {
-            let requestId = await getToken();  // Get request ID (user ID)
-            requestId = parseInt(requestId);
+            try {
+                let requestId = await getToken();  // Get request ID (user ID)
+                requestId = parseInt(requestId);
 
-            // Post request to the API to accept the friend request
-            const response = await axios.post(`${Config.API_URL1}friends/accept/${requestId}/${receiveId}`);
+                // Post request to the API to accept the friend request
+                const response = await axios.post(`${Config.API_URL1}friends/accept/${requestId}/${receiveId}`);
 
-            if (response.status === 200) {
-                console.log("Friend request accepted!");
-                setIsAccepted(true); // Update the state to reflect acceptance
-            } else {
-                throw new Error('Failed to accept friend request');
+                if (response.status === 200) {
+                    console.log("Friend request accepted!");
+                    setIsAccepted(true); // Update the state to reflect acceptance
+                } else {
+                    throw new Error('Failed to accept friend request');
+                }
+            } catch (error) {
+                console.error('Error accepting friend request:', error);
+                setError('Failed to accept friend request. Please try again later.');
+            } finally {
+                setLoading(false);  // Stop loading state
             }
-        } catch (error) {
-            console.error('Error accepting friend request:', error);
-            setError('Failed to accept friend request. Please try again later.');
-        } finally {
-            setLoading(false);  // Stop loading state
         }
+
     };
 
     return (

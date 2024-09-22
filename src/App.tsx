@@ -17,6 +17,9 @@ import HomeTabs from './Navigation/HomeTap';
 import Statistics from './Screen/Statistics';
 import QuizList from './Screen/QuizList';
 import DrawerNavigator from './Navigation/DrawerNavigator';
+import Challenge from './Screen/Challenge';
+import colors from './data/colors';
+import QuestionChallenge from './Screen/QuestionChallenge';
 
 
 export type rootStackPramList = {
@@ -28,6 +31,8 @@ export type rootStackPramList = {
   HomeTabs: undefined;
   QuizList: undefined;
   main: undefined;
+  Challenge: undefined;
+  QuestionChallenge: undefined;
 };
 
 const Stack = createStackNavigator<rootStackPramList>();
@@ -61,6 +66,23 @@ const App = () => {
           <Stack.Screen name="Interesting" component={Interesting} options={{ headerShown: false }} />
           <Stack.Screen name="Question" component={Question} options={{ headerShown: false }} />
           <Stack.Screen name="main" component={DrawerNavigator} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="Challenge"
+            component={Challenge}
+            options={{
+              title: 'Challenge Friends', // Set the header title
+              headerStyle: {
+                backgroundColor: colors.primary, // Set the background color of the header
+              },
+              headerTintColor: '#fff', // Set the text/icon color
+              headerTitleStyle: {
+                fontWeight: 'bold', // Bold title font
+                fontSize: 22, // Custom font size
+              },
+              headerTitleAlign: 'center', // Center the title
+            }}
+          />
+          <Stack.Screen name='QuestionChallenge' component={QuestionChallenge} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
