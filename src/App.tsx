@@ -20,6 +20,7 @@ import DrawerNavigator from './Navigation/DrawerNavigator';
 import Challenge from './Screen/Challenge';
 import colors from './data/colors';
 import QuestionChallenge from './Screen/QuestionChallenge';
+import ResultChallenge from './Screen/ResultChallenge';
 
 
 export type rootStackPramList = {
@@ -33,6 +34,7 @@ export type rootStackPramList = {
   main: undefined;
   Challenge: undefined;
   QuestionChallenge: undefined;
+  ResultChallenge: undefined;
 };
 
 const Stack = createStackNavigator<rootStackPramList>();
@@ -83,6 +85,8 @@ const App = () => {
             }}
           />
           <Stack.Screen name='QuestionChallenge' component={QuestionChallenge} options={{ headerShown: false }} />
+          <Stack.Screen name='ResultChallenge' component={ResultChallenge} options={{ headerShown: false }} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

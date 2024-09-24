@@ -11,7 +11,7 @@ import { UserContext } from '../Context/UserContext';
 const QuestionChallenge = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const category = route.params?.category; // Access the passed category
+    const { category, challengeId } = route.params; // Access the passed category
     const [data, setData] = useState([]); // Initialize data state as an empty array
     const [isLoading, setIsLoading] = useState(false); // State to show/hide the loading spinner
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -19,7 +19,6 @@ const QuestionChallenge = () => {
     const [completed, setCompleted] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const { challengeId } = useContext(UserContext);
 
     // Fetch questions from API
     useEffect(() => {
@@ -83,7 +82,7 @@ const QuestionChallenge = () => {
         const score = parseInt(correctAnswers);  // Convert score to an integer
         const status = "ACCEPTED"; // Set the status to ACCEPTED
         setIsLoading(true); // Show loading indicator
-        console.log(participantId);
+        console.log("challengeId", challengeId);
 
         try {
             const response = await axios.post(`${Config.API_URL1}challenges/${challengeId}/result`, {
@@ -93,7 +92,7 @@ const QuestionChallenge = () => {
             });
 
             if (response.status === 200) {
-                navigation.navigate('Statistics'); // Navigate to Statistics if the request is successful
+                navigation.navigate('ResultChallenge', { challengeId }); // Navigate to Statistics if the request is successful
             }
         } catch (error) {
             console.error("Error posting data:", error.message);

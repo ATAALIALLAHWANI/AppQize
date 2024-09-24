@@ -12,6 +12,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { getToken } from '../type/storeToken';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
@@ -48,7 +49,7 @@ function Home() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.list}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <EvilIcons name="navicon" size={35} color={colors.icon} />
@@ -95,21 +96,19 @@ function Home() {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleNavigation}>
-          <Text> Start Quize </Text>
+          <Text style={{ fontSize: 15, color: 'white' }}> Start Quize </Text>
         </TouchableOpacity>
 
 
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: colors.background,
-    justifyContent: 'center',
   },
   list: {
     padding: '3%',
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     alignItems: 'center',
+    alignSelf: 'center'
   },
   button: {
     width: '50%',
@@ -149,6 +149,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '90%',
     flexWrap: 'wrap',
+    alignSelf: 'center'
+
   },
   card: {
     width: width * 0.42,
