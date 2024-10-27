@@ -86,7 +86,7 @@ const Interesting = () => {
                 // Navigate to the next screen after successful API call
                 navigation.reset({
                     index: 1, // Focus on the second tab, which is 'Home'
-                    routes: [{ name: 'HomeTabs', params: { screen: 'Home' } }],
+                    routes: [{ name: 'main', params: { screen: 'Home' } }],
                 });
             } else {
                 console.error('Failed to save profile data:', response.status);

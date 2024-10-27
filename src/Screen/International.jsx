@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
         marginRight: 10,
+        color: colors.text
     },
     buttonContent: {
         flexDirection: 'row',

@@ -41,7 +41,7 @@ const QuestionComponent = ({ data, totalQuestions, currentQuestion, selectedOpti
                                 <View style={styles.progressBarBackground}>
                                     <View style={[styles.progressBar, { width: `${(progress * 100).toFixed(0)}%` }]} />
                                 </View>
-                                <Text>{`${correctAnswers}/${totalQuestions} correct answers`}</Text>
+                                <Text style={{ color: colors.text }}>{`${correctAnswers}/${totalQuestions} correct answers`}</Text>
                             </View>
                         </View>
                         <View>

@@ -6,7 +6,7 @@ export default {
     background: '#FFF',
     backgroundScreen: '#ee1f8',
 
-    text: '#ffffff',
+    text: 'black',
     border: '#ccc',
     buttonBackground: '#1e90ff',
     button: '#32cd32',
@@ -15,6 +15,7 @@ export default {
     progressBar: '#32cd32',
     tabIconDefault: '#ccc', // Default icon color
     tabIconSelected: '#790cc9', // Icon color when selected
-    icons_tap: 'white', ///   
+    icons_tap: 'white', ///  
+    success: '#838383'
 
 };

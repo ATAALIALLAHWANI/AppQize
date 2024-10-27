@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 15,
         paddingHorizontal: 20,
-        backgroundColor: colors.backgroundLight,
+        backgroundColor: colors.background,
         borderBottomWidth: 1,
         borderBottomColor: colors.border,
         borderRadius: 8,
@@ -148,11 +148,11 @@ const styles = StyleSheet.create({
     message: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: colors.primaryText,
+        color: colors.primary,
     },
     timestamp: {
         fontSize: 12,
-        color: colors.secondaryText,
+        color: colors.icon,
         marginTop: 4,
     },
 });

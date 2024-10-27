@@ -102,10 +102,13 @@ const styles = StyleSheet.create({
     friendName: {
         fontSize: 16,
         flex: 1,
+        color: colors.text,
     },
     friendEmail: {
         fontSize: 14,
         marginRight: 15,
+        color: colors.text,
+
     },
     addButton: {
         backgroundColor: colors.primary,
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     addButtonText: {
-        color: '#fff',
+        color: colors.text,
         fontSize: 14,
     },
     disabledButton: {
