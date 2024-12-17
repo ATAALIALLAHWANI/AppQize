@@ -80,7 +80,7 @@ To learn more about React Native, take a look at the following resources:
 
 - This is a demo image from the assets folder:
 
-![Demo Image](assets/demo/Screenshot_1.jpg)
+![Demo Image](src/assets/demo/Screenshot_1.jpg)
 ![Demo Image](assets/demo/Screenshot_2.jpg)
 ![Demo Image](assets/demo/Screenshot_3.jpg)
 ![Demo Image](assets/demo/Screenshot_4.jpg)
