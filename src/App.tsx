@@ -21,6 +21,7 @@ import Challenge from './Screen/Challenge';
 import colors from './data/colors';
 import QuestionChallenge from './Screen/QuestionChallenge';
 import ResultChallenge from './Screen/ResultChallenge';
+import NotesApp from './Screen/Notes';
 
 
 export type rootStackPramList = {
@@ -59,7 +60,7 @@ const App = () => {
 
   return (
     <UserProvider>
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <Stack.Navigator>
 
           <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
@@ -88,7 +89,8 @@ const App = () => {
           <Stack.Screen name='ResultChallenge' component={ResultChallenge} options={{ headerShown: false }} />
 
         </Stack.Navigator>
-      </NavigationContainer>
+      </NavigationContainer> */}
+      <NotesApp />
     </UserProvider>
   );
 };
