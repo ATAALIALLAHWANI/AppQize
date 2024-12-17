@@ -79,15 +79,37 @@ To learn more about React Native, take a look at the following resources:
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
 
 - This is a demo image from the assets folder:
+<p align="center">
+  <img src="src/assets/demo/Screenshot_1.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_2.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_3.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_4.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_5.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_6.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_7.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_8.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_9.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_10.jpg" alt="Demo Image" width="400">
+</p>
+<p align="center">
+  <img src="src/assets/demo/Screenshot_11.jpg" alt="Demo Image" width="400">
+</p>
 
-![Demo Image](src/assets/demo/Screenshot_1.jpg)
-![Demo Image](assets/demo/Screenshot_2.jpg)
-![Demo Image](assets/demo/Screenshot_3.jpg)
-![Demo Image](assets/demo/Screenshot_4.jpg)
-![Demo Image](assets/demo/Screenshot_5.jpg)
-![Demo Image](assets/demo/Screenshot_6.jpg)
-![Demo Image](assets/demo/Screenshot_7.jpg)
-![Demo Image](assets/demo/Screenshot_8.jpg)
-![Demo Image](assets/demo/Screenshot_9.jpg)
-![Demo Image](assets/demo/Screenshot_10.jpg)
-![Demo Image](assets/demo/Screenshot_11.jpg)
